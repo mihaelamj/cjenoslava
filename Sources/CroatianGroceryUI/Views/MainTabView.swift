@@ -1,4 +1,5 @@
- import SwiftUI import CroatianGroceryCore
+import SwiftUI
+import CroatianGroceryCore
 public struct MainTabView: View {
 
 public init() {}
