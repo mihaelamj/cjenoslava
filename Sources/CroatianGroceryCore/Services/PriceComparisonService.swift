@@ -38,7 +38,7 @@ public func findBestDeals(from products: [UnifiedProduct], limit: Int = 10) -> [
 public func calculateSavings(from comparisons: [PriceComparison]) -> PriceSavingsReport {
     let totalComparisons = comparisons.count
     let totalSavings = comparisons.reduce(0) { $0 + $1.priceDifference }
-    let averageSavings = totalComparisons > 0 ? totalSavings / Decimal(totalComparisons) : 0
+    let averageSavings = totalComparisons > 0 ? totalSavings / Float(totalComparisons) : 0
     
     let maxSaving = comparisons.max { $0.priceDifference < $1.priceDifference }
     
@@ -70,7 +70,7 @@ public func filterByCategory(_ products: [UnifiedProduct], category: String) -> 
     }
 }
 
-public func filterByPriceRange(_ products: [UnifiedProduct], min: Decimal, max: Decimal) -> [UnifiedProduct] {
+public func filterByPriceRange(_ products: [UnifiedProduct], min: Float, max: Float) -> [UnifiedProduct] {
     return products.filter { product in
         product.unitPrice >= min && product.unitPrice <= max
     }
@@ -89,11 +89,11 @@ private func normalizeProductName(_ name: String) -> String {
 
 public struct PriceSavingsReport {
 public let totalComparisons: Int
-public let totalSavings: Decimal
-public let averageSavings: Decimal
+public let totalSavings: Float
+public let averageSavings: Float
 public let biggestSaving: PriceComparison?
 
-public init(totalComparisons: Int, totalSavings: Decimal, averageSavings: Decimal, biggestSaving: PriceComparison?) {
+public init(totalComparisons: Int, totalSavings: Float, averageSavings: Float, biggestSaving: PriceComparison?) {
     self.totalComparisons = totalComparisons
     self.totalSavings = totalSavings
     self.averageSavings = averageSavings
@@ -112,7 +112,7 @@ public func generateProviderAnalytics(_ products: [UnifiedProduct]) -> [Provider
     
     return grouped.map { provider, products in
         let prices = products.map { $0.unitPrice }
-        let averagePrice = prices.reduce(0, +) / Decimal(prices.count)
+        let averagePrice = prices.reduce(0, +) / Float(prices.count)
         let minPrice = prices.min() ?? 0
         let maxPrice = prices.max() ?? 0
         
@@ -136,7 +136,7 @@ public func generateCategoryAnalytics(_ products: [UnifiedProduct]) -> [Category
     
     return grouped.map { category, products in
         let prices = products.map { $0.unitPrice }
-        let averagePrice = prices.reduce(0, +) / Decimal(prices.count)
+        let averagePrice = prices.reduce(0, +) / Float(prices.count)
         
         let providerCounts = Dictionary(grouping: products) { $0.provider }
             .mapValues { $0.count }
@@ -154,13 +154,13 @@ public func generateCategoryAnalytics(_ products: [UnifiedProduct]) -> [Category
 public struct ProviderAnalytics {
 public let provider: GroceryProvider
 public let totalProducts: Int
-public let averagePrice: Decimal
-public let minPrice: Decimal
-public let maxPrice: Decimal
+public let averagePrice: Float
+public let minPrice: Float
+public let maxPrice: Float
 public let productsOnSale: Int
 public let salePercentage: Double
 
-public init(provider: GroceryProvider, totalProducts: Int, averagePrice: Decimal, minPrice: Decimal, maxPrice: Decimal, productsOnSale: Int, salePercentage: Double) {
+public init(provider: GroceryProvider, totalProducts: Int, averagePrice: Float, minPrice: Float, maxPrice: Float, productsOnSale: Int, salePercentage: Double) {
     self.provider = provider
     self.totalProducts = totalProducts
     self.averagePrice = averagePrice
@@ -174,10 +174,10 @@ public init(provider: GroceryProvider, totalProducts: Int, averagePrice: Decimal
 public struct CategoryAnalytics {
 public let category: String
 public let totalProducts: Int
-public let averagePrice: Decimal
+public let averagePrice: Float
 public let providerCounts: [GroceryProvider: Int]
 
-public init(category: String, totalProducts: Int, averagePrice: Decimal, providerCounts: [GroceryProvider: Int]) {
+public init(category: String, totalProducts: Int, averagePrice: Float, providerCounts: [GroceryProvider: Int]) {
     self.category = category
     self.totalProducts = totalProducts
     self.averagePrice = averagePrice

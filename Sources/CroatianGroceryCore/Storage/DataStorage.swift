@@ -234,7 +234,7 @@ public class ExportService {
         var csv = "Product,Cheapest Provider,Cheapest Price,Most Expensive Provider,Most Expensive Price,Difference,Savings Percentage\n"
         
         for comparison in comparisons {
-            let savingsPercentage = (Float(Int(comparison.priceDifference)) / Float(Int(comparison.expensivePrice)) * 100).rounded()
+            let savingsPercentage = (comparison.priceDifference / comparison.expensivePrice * 100).rounded()
             
             let row = [
                 csvEscape(comparison.productName),

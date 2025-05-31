@@ -9,14 +9,14 @@ public struct UnifiedProduct: Codable, Identifiable, Hashable, Sendable {
     public let brand: String?
     public let barcode: String?
     public let unit: String
-    public let unitPrice: Decimal
+    public let unitPrice: Float
     public let packageSize: String?
-    public let pricePerUnit: Decimal?
+    public let pricePerUnit: Float?
     public let originalData: [String: String] // Preserves original field names
     public let provider: GroceryProvider
     public let lastUpdated: Date
     public let isOnSale: Bool
-    public let originalPrice: Decimal?
+    public let originalPrice: Float?
     public let currency: String
     
     public init(
@@ -26,14 +26,14 @@ public struct UnifiedProduct: Codable, Identifiable, Hashable, Sendable {
         brand: String? = nil,
         barcode: String? = nil,
         unit: String,
-        unitPrice: Decimal,
+        unitPrice: Float,
         packageSize: String? = nil,
-        pricePerUnit: Decimal? = nil,
+        pricePerUnit: Float? = nil,
         originalData: [String: String],
         provider: GroceryProvider,
         lastUpdated: Date = Date(),
         isOnSale: Bool = false,
-        originalPrice: Decimal? = nil,
+        originalPrice: Float? = nil,
         currency: String = "EUR"
     ) {
         self.id = id
@@ -104,10 +104,10 @@ public struct PriceComparison: Identifiable {
     public let productName: String
     public let prices: [GroceryProvider: UnifiedProduct]
     public let cheapestProvider: GroceryProvider
-    public let cheapestPrice: Decimal
+    public let cheapestPrice: Float
     public let expensiveProvider: GroceryProvider
-    public let expensivePrice: Decimal
-    public let priceDifference: Decimal
+    public let expensivePrice: Float
+    public let priceDifference: Float
     
     public init?(products: [UnifiedProduct]) {
         guard !products.isEmpty else { return nil }

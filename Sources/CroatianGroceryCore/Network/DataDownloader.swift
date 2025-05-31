@@ -13,48 +13,59 @@ public class DataDownloader {
     public func downloadAllPrices() async -> [GroceryProvider: Result<[UnifiedProduct], Error>] {
         var results: [GroceryProvider: Result<[UnifiedProduct], Error>] = [:]
         
-        await withTaskGroup(of: (GroceryProvider, Result<[UnifiedProduct], Error>).self) { group in
-            let service = self // DataDownloader, non-Sendable
-            for provider in GroceryProvider.allCases {
-                group.addTask { @Sendable in
-                    do {
-                        let products = try await service.downloadPrices(for: provider)
-                        return (provider, .success(products))
-                    } catch {
-                        return (provider, .failure(error))
-                    }
-                }
-            }
-            
-            for await (provider, result) in group {
-                results[provider] = result
+        // Sequential download to avoid concurrency issues
+        for provider in GroceryProvider.allCases {
+            do {
+                let products = try await downloadPrices(for: provider)
+                results[provider] = .success(products)
+            } catch {
+                results[provider] = .failure(error)
             }
         }
         
         return results
     }
     
-    public func downloadAllPricesEx() async -> [GroceryProvider: Result<[UnifiedProduct], Error>] {
-        var results: [GroceryProvider: Result<[UnifiedProduct], Error>] = [:]
+    
+    public func downloadPrices(for provider: GroceryProvider) async throws -> [UnifiedProduct] {
+        guard let baseURL = provider.websiteURL else {
+            throw ParserError.networkError(URLError(.badURL))
+        }
         
-        await withTaskGroup(of: (GroceryProvider, Result<[UnifiedProduct], Error>).self) { group in
-            for provider in GroceryProvider.allCases {
-                group.addTask {
-                    do {
-                        let products = try await self.downloadPrices(for: provider)
-                        return (provider, .success(products))
-                    } catch {
-                        return (provider, .failure(error))
-                    }
+        // Find data URLs by scraping the provider's webpage
+        let dataURLs = try await findDataURLs(for: provider, baseURL: baseURL)
+        
+        // If no specific data URLs found, try the base URL directly
+        let urlsToTry = dataURLs.isEmpty ? [baseURL] : dataURLs
+        
+        var allProducts: [UnifiedProduct] = []
+        var lastError: Error?
+        
+        // Try each URL until we find valid data
+        for url in urlsToTry {
+            do {
+                let data = try await downloadData(from: url)
+                let products = try await parser.parseProducts(from: data, provider: provider)
+                
+                allProducts.append(contentsOf: products)
+                
+                // If we got products from this URL, log success
+                if !products.isEmpty {
+                    print("✅ Successfully downloaded \(products.count) products from \(provider.displayName)")
                 }
-            }
-            
-            for await (provider, result) in group {
-                results[provider] = result
+            } catch {
+                lastError = error
+                print("⚠️ Failed to download from \(url): \(error.localizedDescription)")
+                continue
             }
         }
         
-        return results
+        // If we didn't get any products, throw the last error
+        if allProducts.isEmpty {
+            throw lastError ?? ParserError.noDataFound
+        }
+        
+        return allProducts
     }
     
     

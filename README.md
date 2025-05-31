@@ -117,13 +117,13 @@ struct UnifiedProduct {
     let brand: String?                  // Brand name
     let barcode: String?                // EAN/UPC code
     let unit: String                    // Unit of measure
-    let unitPrice: Decimal              // Current price
-    let pricePerUnit: Decimal?          // Price per kg/L
+    let unitPrice: Float              // Current price
+    let pricePerUnit: Float?          // Price per kg/L
     let originalData: [String: String]  // Original provider fields
     let provider: GroceryProvider       // Source retailer
     let lastUpdated: Date              // Last update timestamp
     let isOnSale: Bool                 // Sale status
-    let originalPrice: Decimal?        // Original price if on sale
+    let originalPrice: Float?        // Original price if on sale
 }
 Provider-Specific Models
 Each retailer has its own model preserving original field names:

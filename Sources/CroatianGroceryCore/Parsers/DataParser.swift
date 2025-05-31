@@ -368,7 +368,7 @@ public class CSVParser: DataParser {
     
     // MARK: - Helper Methods
     
-    private func parsePrice(_ priceString: String) -> Decimal {
+    private func parsePrice(_ priceString: String) -> Float {
         let cleaned = priceString
             .replacingOccurrences(of: ",", with: ".")
             .replacingOccurrences(of: " ", with: "")
@@ -377,6 +377,6 @@ public class CSVParser: DataParser {
             .replacingOccurrences(of: "HRK", with: "")
             .replacingOccurrences(of: "EUR", with: "")
         
-        return Decimal(string: cleaned) ?? 0
+        return Float(cleaned) ?? 0
     }
 }

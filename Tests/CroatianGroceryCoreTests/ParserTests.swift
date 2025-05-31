@@ -26,7 +26,7 @@ func testCSVParsingBasic() async throws {
     
     let milk = products.first { $0.name == "Mlijeko 1L" }
     XCTAssertNotNil(milk)
-    XCTAssertEqual(milk?.unitPrice, Decimal(string: "8.99"))
+    XCTAssertEqual(milk?.unitPrice, Float(string: "8.99"))
     XCTAssertEqual(milk?.unit, "kom")
     XCTAssertEqual(milk?.category, "Mliječni proizvodi")
     XCTAssertEqual(milk?.provider, .plodine)
@@ -45,17 +45,17 @@ func testCSVParsingWithQuotes() async throws {
     
     let commaProduct = products.first { $0.name == "Product with, comma" }
     XCTAssertNotNil(commaProduct)
-    XCTAssertEqual(commaProduct?.unitPrice, Decimal(string: "12.50"))
+    XCTAssertEqual(commaProduct?.unitPrice, Float(string: "12.50"))
 }
 
 func testPriceParsingWithDifferentFormats() {
     let testCases = [
-        ("8.99", Decimal(string: "8.99")!),
-        ("8,99", Decimal(string: "8.99")!),
-        ("€8.99", Decimal(string: "8.99")!),
-        ("8.99 kn", Decimal(string: "8.99")!),
-        ("8.99 EUR", Decimal(string: "8.99")!),
-        ("8 99", Decimal(string: "899")!)  // Spaces as thousands separator
+        ("8.99", Float(string: "8.99")!),
+        ("8,99", Float(string: "8.99")!),
+        ("€8.99", Float(string: "8.99")!),
+        ("8.99 kn", Float(string: "8.99")!),
+        ("8.99 EUR", Float(string: "8.99")!),
+        ("8 99", Float(string: "899")!)  // Spaces as thousands separator
     ]
     
     for (input, expected) in testCases {
@@ -117,8 +117,8 @@ func testSaleProductParsing() async throws {
     
     let saleProduct = products.first { $0.name == "Sale Product" }!
     XCTAssertTrue(saleProduct.isOnSale)
-    XCTAssertEqual(saleProduct.unitPrice, Decimal(string: "7.99"))
-    XCTAssertEqual(saleProduct.originalPrice, Decimal(string: "10.00"))
+    XCTAssertEqual(saleProduct.unitPrice, Float(string: "7.99"))
+    XCTAssertEqual(saleProduct.originalPrice, Float(string: "10.00"))
     
     let regularProduct = products.first { $0.name == "Regular Product" }!
     XCTAssertFalse(regularProduct.isOnSale)
@@ -126,7 +126,7 @@ func testSaleProductParsing() async throws {
 }
 
 // Helper method exposed for testing
-private func parsePrice(_ priceString: String) -> Decimal {
+private func parsePrice(_ priceString: String) -> Float {
     let cleaned = priceString
         .replacingOccurrences(of: ",", with: ".")
         .replacingOccurrences(of: " ", with: "")
@@ -135,6 +135,6 @@ private func parsePrice(_ priceString: String) -> Decimal {
         .replacingOccurrences(of: "HRK", with: "")
         .replacingOccurrences(of: "EUR", with: "")
     
-    return Decimal(string: cleaned) ?? 0
+    return Float(string: cleaned) ?? 0
 }
 }

@@ -189,7 +189,7 @@ private func updateSavingsReport() {
  
  let milk = products.first { $0.name == "Mlijeko 1L" }
  XCTAssertNotNil(milk)
- XCTAssertEqual(milk?.unitPrice, Decimal(string: "8.99"))
+ XCTAssertEqual(milk?.unitPrice, Float(string: "8.99"))
  XCTAssertEqual(milk?.unit, "kom")
  XCTAssertEqual(milk?.category, "Mliječni proizvodi")
  XCTAssertEqual(milk?.provider, .plodine)
@@ -208,17 +208,17 @@ private func updateSavingsReport() {
  
  let commaProduct = products.first { $0.name == "Product with, comma" }
  XCTAssertNotNil(commaProduct)
- XCTAssertEqual(commaProduct?.unitPrice, Decimal(string: "12.50"))
+ XCTAssertEqual(commaProduct?.unitPrice, Float(string: "12.50"))
  }
  
  func testPriceParsingWithDifferentFormats() {
  let testCases = [
- ("8.99", Decimal(string: "8.99")!),
- ("8,99", Decimal(string: "8.99")!),
- ("€8.99", Decimal(string: "8.99")!),
- ("8.99 kn", Decimal(string: "8.99")!),
- ("8.99 EUR", Decimal(string: "8.99")!),
- ("8 99", Decimal(string: "899")!)  // Spaces as thousands separator
+ ("8.99", Float(string: "8.99")!),
+ ("8,99", Float(string: "8.99")!),
+ ("€8.99", Float(string: "8.99")!),
+ ("8.99 kn", Float(string: "8.99")!),
+ ("8.99 EUR", Float(string: "8.99")!),
+ ("8 99", Float(string: "899")!)  // Spaces as thousands separator
  ]
  
  for (input, expected) in testCases {
@@ -280,8 +280,8 @@ private func updateSavingsReport() {
  
  let saleProduct = products.first { $0.name == "Sale Product" }!
  XCTAssertTrue(saleProduct.isOnSale)
- XCTAssertEqual(saleProduct.unitPrice, Decimal(string: "7.99"))
- XCTAssertEqual(saleProduct.originalPrice, Decimal(string: "10.00"))
+ XCTAssertEqual(saleProduct.unitPrice, Float(string: "7.99"))
+ XCTAssertEqual(saleProduct.originalPrice, Float(string: "10.00"))
  
  let regularProduct = products.first { $0.name == "Regular Product" }!
  XCTAssertFalse(regularProduct.isOnSale)
@@ -289,7 +289,7 @@ private func updateSavingsReport() {
  }
  
  // Helper method exposed for testing
- private func parsePrice(_ priceString: String) -> Decimal {
+ private func parsePrice(_ priceString: String) -> Float {
  let cleaned = priceString
  .replacingOccurrences(of: ",", with: ".")
  .replacingOccurrences(of: " ", with: "")
@@ -298,7 +298,7 @@ private func updateSavingsReport() {
  .replacingOccurrences(of: "HRK", with: "")
  .replacingOccurrences(of: "EUR", with: "")
  
- return Decimal(string: cleaned) ?? 0
+ return Float(string: cleaned) ?? 0
  }
  }
  # Croatian Grocery Price Tracker
@@ -420,13 +420,13 @@ private func updateSavingsReport() {
  let brand: String?                  // Brand name
  let barcode: String?                // EAN/UPC code
  let unit: String                    // Unit of measure
- let unitPrice: Decimal              // Current price
- let pricePerUnit: Decimal?          // Price per kg/L
+ let unitPrice: Float              // Current price
+ let pricePerUnit: Float?          // Price per kg/L
  let originalData: [String: String]  // Original provider fields
  let provider: GroceryProvider       // Source retailer
  let lastUpdated: Date              // Last update timestamp
  let isOnSale: Bool                 // Sale status
- let originalPrice: Decimal?        // Original price if on sale
+ let originalPrice: Float?        // Original price if on sale
  }
  Provider-Specific Models
  Each retailer has its own model preserving original field names:
