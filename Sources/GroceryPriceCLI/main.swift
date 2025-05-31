@@ -1,5 +1,8 @@
-import Foundation import ArgumentParser import CroatianGroceryCore
-@main
+import Foundation
+import ArgumentParser
+import CroatianGroceryCore
+
+//@main
 struct GroceryPriceCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "grocery-price-cli",
