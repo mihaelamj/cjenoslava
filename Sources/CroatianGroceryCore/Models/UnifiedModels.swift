@@ -99,7 +99,7 @@ public enum GroceryProvider: String, CaseIterable, Codable, Sendable {
 }
 
 /// Represents a price comparison between providers
-public struct PriceComparison: Identifiable {
+public struct PriceComparison: Identifiable, Sendable {
     public let id = UUID()
     public let productName: String
     public let prices: [GroceryProvider: UnifiedProduct]
@@ -135,7 +135,7 @@ public struct PriceComparison: Identifiable {
 }
 
 /// Data collection session information
-public struct DataCollectionSession: Codable, Identifiable {
+public struct DataCollectionSession: Codable, Identifiable, Sendable {
     public let id: UUID
     public let startTime: Date
     public let endTime: Date?

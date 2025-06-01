@@ -3,7 +3,12 @@ import PackageDescription
 
 let package = Package(
     name: "CroatianGroceryPriceTracker",
-    platforms: [ .macOS(.v13), .iOS(.v16), .watchOS(.v9), .tvOS(.v16) ],
+    platforms: [
+        .macOS(.v13),
+        .iOS(.v17),
+        .watchOS(.v9),
+        .tvOS(.v17)
+    ],
     products: [
         .library( name: "CroatianGroceryCore",
                   targets: [ "CroatianGroceryCore"] ),

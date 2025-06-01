@@ -180,16 +180,36 @@ public class DataDownloader {
     
     private func extractCSVLinks(from html: String, baseURL: URL) -> [URL] {
         var urls: [URL] = []
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
         
-        // Look for common CSV file patterns
+        // Look for common CSV file patterns, including date-specific patterns
         let patterns = [
             #"href=["\']([^"\']*\.csv[^"\']*)["\']"#,
             #"href=["\']([^"\']*cjenik[^"\']*)["\']"#,
             #"href=["\']([^"\']*price[^"\']*)["\']"#,
-            #"href=["\']([^"\']*lista[^"\']*)["\']"#
+            #"href=["\']([^"\']*lista[^"\']*)["\']"#,
+            #"href=["\']([^"\']*mpc[^"\']*)["\']"#,
+            #"href=["\']([^"\']*\.json[^"\']*)["\']"#,
+            #"href=["\']([^"\']*\.xml[^"\']*)["\']"#
         ]
         
-        for pattern in patterns {
+        // Create date patterns for current date (many providers include dates in filenames)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayString = dateFormatter.string(from: currentDate)
+        dateFormatter.dateFormat = "yyyyMMdd"
+        let todayCompact = dateFormatter.string(from: currentDate)
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let todayEuropean = dateFormatter.string(from: currentDate)
+        
+        let datePatterns = [
+            #"href=["\']([^"\']*\#(todayString)[^"\']*)["\']"#,
+            #"href=["\']([^"\']*\#(todayCompact)[^"\']*)["\']"#,
+            #"href=["\']([^"\']*\#(todayEuropean)[^"\']*)["\']"#
+        ]
+        
+        // First try to find date-specific files
+        for pattern in datePatterns {
             if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
                 let range = NSRange(html.startIndex..<html.endIndex, in: html)
                 let matches = regex.matches(in: html, options: [], range: range)
@@ -206,7 +226,44 @@ public class DataDownloader {
             }
         }
         
-        // If no CSV links found, return the base URL (might be a direct CSV endpoint)
+        // If no date-specific files found, look for general patterns
+        if urls.isEmpty {
+            for pattern in patterns {
+                if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
+                    let range = NSRange(html.startIndex..<html.endIndex, in: html)
+                    let matches = regex.matches(in: html, options: [], range: range)
+                    
+                    for match in matches {
+                        if let linkRange = Range(match.range(at: 1), in: html) {
+                            let linkString = String(html[linkRange])
+                            
+                            if let url = URL(string: linkString, relativeTo: baseURL) {
+                                urls.append(url)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Sort URLs to prioritize more recent files (those with today's date)
+        urls.sort { url1, url2 in
+            let url1String = url1.absoluteString.lowercased()
+            let url2String = url2.absoluteString.lowercased()
+            
+            let url1HasToday = url1String.contains(todayString) || url1String.contains(todayCompact) || url1String.contains(todayEuropean)
+            let url2HasToday = url2String.contains(todayString) || url2String.contains(todayCompact) || url2String.contains(todayEuropean)
+            
+            if url1HasToday && !url2HasToday {
+                return true
+            } else if !url1HasToday && url2HasToday {
+                return false
+            }
+            
+            return url1String < url2String
+        }
+        
+        // If no data links found, return the base URL (might be a direct data endpoint)
         if urls.isEmpty {
             urls.append(baseURL)
         }
