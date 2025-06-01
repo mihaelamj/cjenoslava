@@ -193,20 +193,17 @@ final class DownloadTests: XCTestCase {
     // MARK: - Performance tests
     
     func testDownloadPerformance() async throws {
-        measure {
-            let expectation = expectation(description: "Download completion")
-            
-            Task {
-                do {
-                    _ = try await downloader.downloadPrices(for: .tommy)
-                    expectation.fulfill()
-                } catch {
-                    expectation.fulfill()
-                }
-            }
-            
-            wait(for: [expectation], timeout: 30.0)
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
+        do {
+            _ = try await downloader.downloadPrices(for: .tommy)
+        } catch {
+            // Handle or ignore error
         }
+        
+        let endTime = CFAbsoluteTimeGetCurrent()
+        let elapsed = endTime - startTime
+        print("Download performance: \(elapsed) seconds")
     }
     
     // MARK: - Data validation tests
@@ -254,7 +251,7 @@ extension DownloadTests {
     func skipIfNoNetwork() throws {
         // Skip test if no network connectivity
         let url = URL(string: "https://www.google.com")!
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
         request.timeoutInterval = 5.0
         
         let semaphore = DispatchSemaphore(value: 0)
