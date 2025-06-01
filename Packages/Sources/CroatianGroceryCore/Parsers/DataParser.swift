@@ -160,7 +160,12 @@ public class CSVParser: DataParser {
         
         let price = parsePrice(priceStr)
         let pricePerUnit = data["unit_price"].flatMap { parsePrice($0) }
-        let promoPrice = data["promotional_price"].flatMap { parsePrice($0) }
+//        let promoPrice = data["promotional_price"].flatMap { parsePrice($0) }
+        // Check for an empty string and set promoPrice to nil in that case
+        let promoPrice = data["promotional_price"].flatMap { value in
+            value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : parsePrice(value)
+        }
+        
         
         return UnifiedProduct(
             name: name,
