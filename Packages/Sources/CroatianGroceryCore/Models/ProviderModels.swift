@@ -1,6 +1,7 @@
 import Foundation
 // MARK: - Provider-Specific Models
 
+// swiftlint:disable all
 /// Plodine specific data structure
 public struct PlodineProduct: Codable {
     public let sifra_artikla: String?

@@ -4,4 +4,10 @@
    <FileRef
       location = "group:Packages">
    </FileRef>
+   <FileRef
+      location = "group:Apps/cjenoslava/cjenoslava.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Apps/cjenoslavaMax/cjenoslavaMax.xcodeproj">
+   </FileRef>
 </Workspace>

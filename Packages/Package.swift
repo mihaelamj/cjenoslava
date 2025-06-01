@@ -10,24 +10,70 @@ let package = Package(
         .tvOS(.v17)
     ],
     products: [
-        .library( name: "CroatianGroceryCore",
-                  targets: [ "CroatianGroceryCore"] ),
-        .library( name: "CroatianGroceryUI",
-                  targets: ["CroatianGroceryUI"] ),
-        .executable( name: "grocery-price-cli",
-                     targets: ["GroceryPriceCLI"] ) ],
+        .singleTargetLibrary("CroatianGroceryCore"),
+        .singleTargetLibrary("CroatianGroceryUI"),
+        .executable(name: "grocery-price-cli", targets: ["GroceryPriceCLI"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
-        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0")
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"),
+        .package(url: "https://github.com/realm/SwiftLint", exact: "0.54.0"),
     ],
-    targets: [
-        .target( name: "CroatianGroceryCore",
-                 dependencies: ["SwiftyJSON"], path: "Sources/CroatianGroceryCore" ),
-        .target( name: "CroatianGroceryUI",
-                 dependencies: ["CroatianGroceryCore"], path: "Sources/CroatianGroceryUI" ),
-        .executableTarget( name: "GroceryPriceCLI",
-                           dependencies: [ "CroatianGroceryCore",
-                                           .product(name: "ArgumentParser", package: "swift-argument-parser") ], path: "Sources/GroceryPriceCLI" ),
-        .testTarget( name: "CroatianGrocerTests", dependencies: ["CroatianGroceryCore"], path: "Tests" )
-    ]
+    targets: {
+        let coreTarget = Target.target(
+            name: "CroatianGroceryCore",
+            dependencies: [
+                "SwiftyJSON"
+            ],
+            path: "Sources/CroatianGroceryCore"
+        )
+        
+        let uiTarget = Target.target(
+            name: "CroatianGroceryUI",
+            dependencies: [
+                "CroatianGroceryCore"
+            ],
+            path: "Sources/CroatianGroceryUI"
+        )
+        
+        let cliTarget = Target.executableTarget(
+            name: "GroceryPriceCLI",
+            dependencies: [
+                "CroatianGroceryCore",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ],
+            path: "Sources/GroceryPriceCLI"
+        )
+        
+        let testsTarget = Target.testTarget(
+            name: "CroatianGrocerTests",
+            dependencies: [
+                "CroatianGroceryCore"
+            ],
+            path: "Tests"
+        )
+        
+        var targets: [Target] = [
+            coreTarget,
+            uiTarget,
+            cliTarget,
+            testsTarget,
+        ]
+        
+        return targets
+    }()
 )
+
+// Inject SwiftLint plugin into each target
+package.targets = package.targets.map { target in
+    var plugins = target.plugins ?? []
+    plugins.append(.plugin(name: "SwiftLintPlugin", package: "SwiftLint"))
+    target.plugins = plugins
+    return target
+}
+
+extension Product {
+    static func singleTargetLibrary(_ name: String) -> Product {
+        .library(name: name, targets: [name])
+    }
+}

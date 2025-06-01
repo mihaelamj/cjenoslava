@@ -1,6 +1,7 @@
 import Foundation
 // MARK: - Parser Protocol
 
+// swiftlint:disable all
 public protocol DataParser {
     func parseProducts(from data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct]
 }
