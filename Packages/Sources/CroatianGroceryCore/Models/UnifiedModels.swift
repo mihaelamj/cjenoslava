@@ -66,6 +66,13 @@ public enum GroceryProvider: String, CaseIterable, Codable, Sendable {
     case konzum = "konzum"
     case kaufland = "kaufland"
     case ktc = "ktc"
+//    case metro = "metro"
+//    case ntl = "ntl"
+//    case ribola = "ribola"
+//    case spar = "spar"
+//    case trgocentar = "trgocentar"
+//    case vrutak = "vrutak"
+//    case zabac = "zabac"
     
     public var displayName: String {
         switch self {
@@ -79,6 +86,7 @@ public enum GroceryProvider: String, CaseIterable, Codable, Sendable {
         case .konzum: return "Konzum"
         case .kaufland: return "Kaufland"
         case .ktc: return "KTC"
+//        case .metro: return "Metro"
         }
     }
     
@@ -94,6 +102,8 @@ public enum GroceryProvider: String, CaseIterable, Codable, Sendable {
         case .konzum: return URL(string: "https://www.konzum.hr/cjenici")
         case .kaufland: return URL(string: "https://www.kaufland.hr/akcije-novosti/mpc-popis.html")
         case .ktc: return URL(string: "https://www.ktc.hr/cjenici")
+//        case .metro: return URL(string: "https://metrocjenik.com.hr")
+        
         }
     }
 }
