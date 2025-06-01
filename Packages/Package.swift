@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "CroatianGroceryPriceTracker",
     platforms: [
-        .macOS(.v13),
+        .macOS(.v14),
         .iOS(.v17),
         .watchOS(.v9),
         .tvOS(.v17)

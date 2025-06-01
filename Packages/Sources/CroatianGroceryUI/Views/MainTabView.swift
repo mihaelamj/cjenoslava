@@ -173,7 +173,9 @@ public struct ExportSheetView: View {
                 }
             }
             .navigationTitle("Export Data")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 Button("Done") {
                     dismiss()
@@ -331,11 +333,11 @@ class ExportViewModel: ObservableObject {
                 }
             }.value
 
-    #if os(iOS)
+            #if os(iOS)
             shareData(data, fileName: fileName)
-    #else
+            #else
             try await saveToDownloads(data, fileName: fileName)
-    #endif
+            #endif
 
             showingSuccessAlert = true
         } catch {

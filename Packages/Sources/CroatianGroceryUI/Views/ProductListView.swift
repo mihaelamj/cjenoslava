@@ -25,7 +25,9 @@ public struct ProductListView: View {
                     }
                 }
                 .navigationTitle("Grocery Prices")
-                .navigationBarTitleDisplayMode(.large)
+                #if !os(macOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
                 //            .toolbar {
                 //                Button("Refresh") {
                 //                    Task {
@@ -247,11 +249,15 @@ public struct FiltersView: View {
                             Text(provider.displayName).tag(provider as GroceryProvider?)
                         }
                     }
+                    #if os(iOS)
                     .pickerStyle(.wheel)
+                    #endif
                 }
             }
             .navigationTitle("Filters")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 Button("Cancel") {

@@ -196,8 +196,11 @@ public struct StatCardView: View {
                 }
             }
         }
-        .padding()
+        #if os(macOS)
+        .background(Color.gray)
+        #else
         .background(Color(.systemGray6))
+        #endif
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
@@ -254,7 +257,11 @@ public struct ProviderAnalyticsRowView: View {
             }
         }
         .padding()
+        #if os(macOS)
+        .background(Color.gray)
+        #else
         .background(Color(.systemGray6))
+        #endif
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
@@ -290,7 +297,11 @@ public struct CategoryAnalyticsRowView: View {
             }
         }
         .padding()
+        #if os(macOS)
+        .background(Color.gray)
+        #else
         .background(Color(.systemGray6))
+        #endif
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
