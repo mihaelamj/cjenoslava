@@ -301,47 +301,6 @@ class ExportViewModel: ObservableObject {
         }
     }
     
-//    func export(type: ExportType, format: ExportFormat) async {
-//        isExporting = true
-//        do {
-//            let data: Data
-//            let fileName: String
-//            
-//            switch type {
-//            case .products:
-//                let products = try await dataManager.loadProducts()
-//                
-//                switch format {
-//                case .csv:
-//                    data = try exportService.exportToCSV(products: products)
-//                    fileName = "grocery_products.csv"
-//                case .json:
-//                    data = try exportService.exportToJSON(products: products)
-//                    fileName = "grocery_products.json"
-//                }
-//                
-//            case .comparisons:
-//                let comparisons = try await dataManager.getComparisons()
-//                data = try exportService.exportComparisonsToCSV(comparisons: comparisons)
-//                fileName = "price_comparisons.csv"
-//            }
-//#if os(iOS)
-//            shareData(data, fileName: fileName)
-//#else
-//            // On macOS, save to Downloads folder
-//            try await saveToDownloads(data, fileName: fileName)
-//#endif
-//            
-//            showingSuccessAlert = true
-//        } catch {
-//            errorMessage = error.localizedDescription
-//            showingErrorAlert = true
-//        }
-//        
-//        isExporting = false
-//    }
-//
-    
     func export(type: ExportType, format: ExportFormat) async {
         isExporting = true
 
