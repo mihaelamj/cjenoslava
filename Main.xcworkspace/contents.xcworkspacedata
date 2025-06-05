@@ -135,5 +135,8 @@
             location = "group:main.py">
          </FileRef>
       </Group>
+      <FileRef
+         location = "group:HowTo.md">
+      </FileRef>
    </Group>
 </Workspace>
