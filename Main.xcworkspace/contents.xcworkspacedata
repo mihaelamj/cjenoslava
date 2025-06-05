@@ -10,4 +10,130 @@
    <FileRef
       location = "group:Apps/cjenoslavaMax/cjenoslavaMax.xcodeproj">
    </FileRef>
+   <Group
+      location = "group:py"
+      name = "py">
+      <FileRef
+         location = "group:uv.lock">
+      </FileRef>
+      <Group
+         location = "group:crawler"
+         name = "crawler">
+         <FileRef
+            location = "group:crawl.py">
+         </FileRef>
+         <FileRef
+            location = "group:__init__.py">
+         </FileRef>
+         <Group
+            location = "group:cli"
+            name = "cli">
+            <FileRef
+               location = "group:crawl.py">
+            </FileRef>
+         </Group>
+         <Group
+            location = "group:store"
+            name = "store">
+            <FileRef
+               location = "group:ribola.py">
+            </FileRef>
+            <FileRef
+               location = "group:metro.py">
+            </FileRef>
+            <FileRef
+               location = "group:lidl.py">
+            </FileRef>
+            <FileRef
+               location = "group:plodine.py">
+            </FileRef>
+            <FileRef
+               location = "group:konzum.py">
+            </FileRef>
+            <FileRef
+               location = "group:models.py">
+            </FileRef>
+            <FileRef
+               location = "group:kaufland.py">
+            </FileRef>
+            <FileRef
+               location = "group:studenac.py">
+            </FileRef>
+            <FileRef
+               location = "group:archive-info.txt">
+            </FileRef>
+            <FileRef
+               location = "group:eurospin.py">
+            </FileRef>
+            <FileRef
+               location = "group:__init__.py">
+            </FileRef>
+            <FileRef
+               location = "group:dm.py">
+            </FileRef>
+            <FileRef
+               location = "group:ntl.py">
+            </FileRef>
+            <FileRef
+               location = "group:utils.py">
+            </FileRef>
+            <FileRef
+               location = "group:trgocentar.py">
+            </FileRef>
+            <FileRef
+               location = "group:ktc.py">
+            </FileRef>
+            <FileRef
+               location = "group:zabac.py">
+            </FileRef>
+            <FileRef
+               location = "group:tommy.py">
+            </FileRef>
+            <FileRef
+               location = "group:base.py">
+            </FileRef>
+            <FileRef
+               location = "group:output.py">
+            </FileRef>
+            <FileRef
+               location = "group:spar.py">
+            </FileRef>
+            <FileRef
+               location = "group:vrutak.py">
+            </FileRef>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:pyproject.toml">
+      </FileRef>
+      <FileRef
+         location = "group:LICENSE">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <Group
+         location = "group:service"
+         name = "service">
+         <Group
+            location = "group:routers"
+            name = "routers">
+            <FileRef
+               location = "group:v0.py">
+            </FileRef>
+            <FileRef
+               location = "group:__init__.py">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:config.py">
+         </FileRef>
+         <FileRef
+            location = "group:__init__.py">
+         </FileRef>
+         <FileRef
+            location = "group:main.py">
+         </FileRef>
+      </Group>
+   </Group>
 </Workspace>
