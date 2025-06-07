@@ -20,6 +20,9 @@
          location = "group:crawler"
          name = "crawler">
          <FileRef
+            location = "group:crawl_all.py">
+         </FileRef>
+         <FileRef
             location = "group:crawl.py">
          </FileRef>
          <FileRef
@@ -36,72 +39,75 @@
             location = "group:store"
             name = "store">
             <FileRef
-               location = "group:ribola.py">
-            </FileRef>
-            <FileRef
-               location = "group:metro.py">
-            </FileRef>
-            <FileRef
-               location = "group:lidl.py">
-            </FileRef>
-            <FileRef
-               location = "group:plodine.py">
-            </FileRef>
-            <FileRef
-               location = "group:konzum.py">
-            </FileRef>
-            <FileRef
-               location = "group:models.py">
-            </FileRef>
-            <FileRef
-               location = "group:kaufland.py">
-            </FileRef>
-            <FileRef
-               location = "group:studenac.py">
+               location = "group:__init__.py">
             </FileRef>
             <FileRef
                location = "group:archive-info.txt">
             </FileRef>
             <FileRef
-               location = "group:eurospin.py">
-            </FileRef>
-            <FileRef
-               location = "group:__init__.py">
+               location = "group:base.py">
             </FileRef>
             <FileRef
                location = "group:dm.py">
             </FileRef>
             <FileRef
-               location = "group:ntl.py">
+               location = "group:eurospin.py">
             </FileRef>
             <FileRef
-               location = "group:utils.py">
+               location = "group:kaufland.py">
             </FileRef>
             <FileRef
-               location = "group:trgocentar.py">
+               location = "group:konzum.py">
             </FileRef>
             <FileRef
                location = "group:ktc.py">
             </FileRef>
             <FileRef
-               location = "group:zabac.py">
+               location = "group:lidl.py">
             </FileRef>
             <FileRef
-               location = "group:tommy.py">
+               location = "group:metro.py">
             </FileRef>
             <FileRef
-               location = "group:base.py">
+               location = "group:models.py">
+            </FileRef>
+            <FileRef
+               location = "group:ntl.py">
             </FileRef>
             <FileRef
                location = "group:output.py">
             </FileRef>
             <FileRef
+               location = "group:plodine.py">
+            </FileRef>
+            <FileRef
+               location = "group:ribola.py">
+            </FileRef>
+            <FileRef
                location = "group:spar.py">
+            </FileRef>
+            <FileRef
+               location = "group:studenac.py">
+            </FileRef>
+            <FileRef
+               location = "group:tommy.py">
+            </FileRef>
+            <FileRef
+               location = "group:trgocentar.py">
+            </FileRef>
+            <FileRef
+               location = "group:utils.py">
             </FileRef>
             <FileRef
                location = "group:vrutak.py">
             </FileRef>
+            <FileRef
+               location = "group:zabac.py">
+            </FileRef>
          </Group>
+         <FileRef
+            location = "group:combined_crawlers.py">
+         </FileRef>
       </Group>
       <FileRef
          location = "group:pyproject.toml">
