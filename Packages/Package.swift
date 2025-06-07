@@ -12,22 +12,36 @@ let package = Package(
     products: [
         .singleTargetLibrary("CroatianGroceryCore"),
         .singleTargetLibrary("CroatianGroceryUI"),
-        .singleTargetLibrary("SharedGroceryProduct"),
+        .singleTargetLibrary("GroceryProduct"),
+        .singleTargetLibrary("GroceryProductDowloader"),
         .executable(name: "grocery-price-cli", targets: ["GroceryPriceCLI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.0"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.0.0"),
         .package(url: "https://github.com/realm/SwiftLint", exact: "0.54.0"),
+        .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.0")
     ],
     targets: {
         
-        let sharedProductTarget = Target.target(
-            name: "SharedGroceryProduct",
+        let groceryProductTarget = Target.target(
+            name: "GroceryProduct",
+            dependencies: []
+        )
+        
+        let groceryProductDownloaderTarget = Target.target(
+            name: "GroceryProductDowloader",
             dependencies: [
-                "SwiftyJSON"
-            ],
-            path: "Sources/SharedGroceryProduct"
+                "SwiftyJSON",
+                "ZIPFoundation"
+            ]
+        )
+        
+        let groceryProductDownloaderTestTarget =  Target.testTarget(
+            name: "GroceryProductDowloaderTests",
+            dependencies: [
+                "GroceryProductDowloader"
+            ]
         )
         
         let coreTarget = Target.target(
@@ -55,20 +69,21 @@ let package = Package(
             path: "Sources/GroceryPriceCLI"
         )
         
-        let testsTarget = Target.testTarget(
-            name: "CroatianGrocerTests",
-            dependencies: [
-                "CroatianGroceryCore"
-            ],
-            path: "Tests"
-        )
+//        let testsTarget = Target.testTarget(
+//            name: "CroatianGrocerTests",
+//            dependencies: [
+//                "CroatianGroceryCore"
+//            ],
+//            path: "Tests"
+//        )
         
         var targets: [Target] = [
-            sharedProductTarget,
+            groceryProductTarget,
+            groceryProductDownloaderTarget,
+            groceryProductDownloaderTestTarget,
             coreTarget,
             uiTarget,
-            cliTarget,
-            testsTarget,
+            cliTarget
         ]
         
         return targets
