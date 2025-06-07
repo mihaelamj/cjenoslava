@@ -82,7 +82,7 @@ struct ListCommand: AsyncParsableCommand {
         var products = try await dataManager.loadProducts()
         
         if let providerName = provider,
-           let groceryProvider = GroceryProvider.allCases.first(where: { $0.rawValue == providerName.lowercased() }) {
+           let groceryProvider = ShopProvider.allCases.first(where: { $0.rawValue == providerName.lowercased() }) {
             products = try await dataManager.getProductsByProvider(groceryProvider)
         }
         

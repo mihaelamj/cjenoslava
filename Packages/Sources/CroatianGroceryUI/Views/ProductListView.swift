@@ -4,7 +4,7 @@ import CroatianGroceryCore
 public struct ProductListView: View {
     @StateObject private var viewModel = ProductListViewModel()
     @State private var searchText = ""
-    @State private var selectedProvider: GroceryProvider?
+    @State private var selectedProvider: ShopProvider?
     @State private var showingFilters = false
     
     public init() {}
@@ -196,9 +196,9 @@ public struct ProductRowView: View {
 }
 
 public struct ProviderBadgeView: View {
-    let provider: GroceryProvider
+    let provider: ShopProvider
     
-    public init(provider: GroceryProvider) {
+    public init(provider: ShopProvider) {
         self.provider = provider
     }
     
@@ -230,11 +230,11 @@ public struct ProviderBadgeView: View {
 }
 
 public struct FiltersView: View {
-    @Binding var selectedProvider: GroceryProvider?
+    @Binding var selectedProvider: ShopProvider?
     let onApply: () -> Void
     @Environment(\.dismiss) private var dismiss
     
-    public init(selectedProvider: Binding<GroceryProvider?>, onApply: @escaping () -> Void) {
+    public init(selectedProvider: Binding<ShopProvider?>, onApply: @escaping () -> Void) {
         self._selectedProvider = selectedProvider
         self.onApply = onApply
     }
@@ -244,9 +244,9 @@ public struct FiltersView: View {
             Form {
                 Section("Provider") {
                     Picker("Select Provider", selection: $selectedProvider) {
-                        Text("All Providers").tag(nil as GroceryProvider?)
-                        ForEach(GroceryProvider.allCases, id: \.self) { provider in
-                            Text(provider.displayName).tag(provider as GroceryProvider?)
+                        Text("All Providers").tag(nil as ShopProvider?)
+                        ForEach(ShopProvider.allCases, id: \.self) { provider in
+                            Text(provider.displayName).tag(provider as ShopProvider?)
                         }
                     }
                     #if os(iOS)
@@ -350,7 +350,7 @@ class ProductListViewModel: ObservableObject {
         }
     }
     
-    func applyFilters(provider: GroceryProvider?) {
+    func applyFilters(provider: ShopProvider?) {
         if let provider = provider {
             let comparisonService = PriceComparisonService()
             filteredProducts = comparisonService.filterByProvider(products, providers: [provider])

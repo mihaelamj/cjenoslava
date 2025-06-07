@@ -5,7 +5,7 @@ public class CSVParser: DataParser {
     
     public init() {}
     
-    public func parseProducts(from data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    public func parseProducts(from data: Data, provider: ShopProvider) async throws -> [UnifiedProduct] {
         guard let content = String(data: data, encoding: .utf8) else {
             throw ParserError.invalidData
         }
@@ -69,7 +69,7 @@ public class CSVParser: DataParser {
         return result
     }
     
-    private func convertToUnifiedProduct(_ data: [String: String], provider: GroceryProvider) async throws -> UnifiedProduct {
+    private func convertToUnifiedProduct(_ data: [String: String], provider: ShopProvider) async throws -> UnifiedProduct {
         switch provider {
         case .plodine:
             return try convertPlodineProduct(data)

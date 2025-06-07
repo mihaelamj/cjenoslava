@@ -3,7 +3,7 @@ import Foundation
 
 // swiftlint:disable all
 public protocol DataParser {
-    func parseProducts(from data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct]
+    func parseProducts(from data: Data, provider: ShopProvider) async throws -> [UnifiedProduct]
 }
 
 // MARK: - Parser Errors

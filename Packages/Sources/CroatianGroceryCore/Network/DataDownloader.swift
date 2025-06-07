@@ -11,11 +11,11 @@ public class DataDownloader {
         self.parser = parser
     }
 
-    public func downloadAllPrices() async -> [GroceryProvider: Result<[UnifiedProduct], Error>] {
-        var results: [GroceryProvider: Result<[UnifiedProduct], Error>] = [:]
+    public func downloadAllPrices() async -> [ShopProvider: Result<[UnifiedProduct], Error>] {
+        var results: [ShopProvider: Result<[UnifiedProduct], Error>] = [:]
 
         // Sequential download to avoid overwhelming servers
-        for provider in GroceryProvider.allCases {
+        for provider in ShopProvider.allCases {
             do {
                 let products = try await downloadPrices(for: provider)
                 results[provider] = .success(products)
@@ -29,7 +29,7 @@ public class DataDownloader {
         return results
     }
 
-    public func downloadPrices(for provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    public func downloadPrices(for provider: ShopProvider) async throws -> [UnifiedProduct] {
         print("🔍 Starting download for \(provider.displayName)...")
 
         let downloader = StoreDownloaderFactory.createDownloader(for: provider, session: session, parser: parser)

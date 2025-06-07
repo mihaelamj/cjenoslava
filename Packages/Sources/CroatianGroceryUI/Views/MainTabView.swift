@@ -120,7 +120,7 @@ public struct SettingsView: View {
             HStack {
                 Label("Data Sources", systemImage: "link")
                 Spacer()
-                Text("\(GroceryProvider.allCases.count) providers")
+                Text("\(ShopProvider.allCases.count) providers")
                     .foregroundColor(.secondary)
             }
         }

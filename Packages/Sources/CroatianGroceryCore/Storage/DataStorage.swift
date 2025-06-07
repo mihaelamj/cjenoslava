@@ -132,8 +132,8 @@ public class DataManager {
         let results = await downloader.downloadAllPrices()
         
         var allProducts: [UnifiedProduct] = []
-        var successfulProviders: [GroceryProvider] = []
-        var failedProviders: [GroceryProvider: String] = [:]
+        var successfulProviders: [ShopProvider] = []
+        var failedProviders: [ShopProvider: String] = [:]
         
         for (provider, result) in results {
             switch result {
@@ -175,7 +175,7 @@ public class DataManager {
         return comparisonService.searchProducts(products, query: query)
     }
     
-    public func getProductsByProvider(_ provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    public func getProductsByProvider(_ provider: ShopProvider) async throws -> [UnifiedProduct] {
         let products = try await loadProducts()
         return comparisonService.filterByProvider(products, providers: [provider])
     }

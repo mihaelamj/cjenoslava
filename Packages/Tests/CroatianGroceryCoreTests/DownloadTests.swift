@@ -136,7 +136,7 @@ final class DownloadTests: XCTestCase {
     func testDownloadAllPrices() async throws {
         let results = await downloader.downloadAllPrices()
         
-        XCTAssertEqual(results.count, GroceryProvider.allCases.count, "Should attempt to download from all providers")
+        XCTAssertEqual(results.count, ShopProvider.allCases.count, "Should attempt to download from all providers")
         
         // Check that at least one provider succeeded
         let successCount = results.values.compactMap { result -> [UnifiedProduct]? in

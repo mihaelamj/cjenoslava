@@ -20,7 +20,7 @@
          location = "group:crawler"
          name = "crawler">
          <FileRef
-            location = "group:crawl_all.py">
+            location = "group:test.py">
          </FileRef>
          <FileRef
             location = "group:crawl.py">

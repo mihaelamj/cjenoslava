@@ -256,7 +256,7 @@ class KonzumDownloader: StoreDownloader {
 // MARK: - Factory
 
 class StoreDownloaderFactory {
-    static func createDownloader(for provider: GroceryProvider, session: URLSession, parser: DataParser) -> StoreDownloader {
+    static func createDownloader(for provider: ShopProvider, session: URLSession, parser: DataParser) -> StoreDownloader {
         switch provider {
         case .tommy:
             return TommyDownloader(session: session, parser: parser)
@@ -276,11 +276,11 @@ class StoreDownloaderFactory {
 // MARK: - Default Implementation
 
 class DefaultStoreDownloader: StoreDownloader {
-    private let provider: GroceryProvider
+    private let provider: ShopProvider
     private let session: URLSession
     private let parser: DataParser
     
-    init(provider: GroceryProvider, session: URLSession, parser: DataParser) {
+    init(provider: ShopProvider, session: URLSession, parser: DataParser) {
         self.provider = provider
         self.session = session
         self.parser = parser

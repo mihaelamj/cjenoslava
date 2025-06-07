@@ -60,7 +60,7 @@ public func searchProducts(_ products: [UnifiedProduct], query: String) -> [Unif
     }
 }
 
-public func filterByProvider(_ products: [UnifiedProduct], providers: Set<GroceryProvider>) -> [UnifiedProduct] {
+public func filterByProvider(_ products: [UnifiedProduct], providers: Set<ShopProvider>) -> [UnifiedProduct] {
     return products.filter { providers.contains($0.provider) }
 }
 
@@ -152,7 +152,7 @@ public func generateCategoryAnalytics(_ products: [UnifiedProduct]) -> [Category
 }
 
 public struct ProviderAnalytics {
-public let provider: GroceryProvider
+public let provider: ShopProvider
 public let totalProducts: Int
 public let averagePrice: Float
 public let minPrice: Float
@@ -160,7 +160,7 @@ public let maxPrice: Float
 public let productsOnSale: Int
 public let salePercentage: Double
 
-public init(provider: GroceryProvider, totalProducts: Int, averagePrice: Float, minPrice: Float, maxPrice: Float, productsOnSale: Int, salePercentage: Double) {
+public init(provider: ShopProvider, totalProducts: Int, averagePrice: Float, minPrice: Float, maxPrice: Float, productsOnSale: Int, salePercentage: Double) {
     self.provider = provider
     self.totalProducts = totalProducts
     self.averagePrice = averagePrice
@@ -175,9 +175,9 @@ public struct CategoryAnalytics {
 public let category: String
 public let totalProducts: Int
 public let averagePrice: Float
-public let providerCounts: [GroceryProvider: Int]
+public let providerCounts: [ShopProvider: Int]
 
-public init(category: String, totalProducts: Int, averagePrice: Float, providerCounts: [GroceryProvider: Int]) {
+public init(category: String, totalProducts: Int, averagePrice: Float, providerCounts: [ShopProvider: Int]) {
     self.category = category
     self.totalProducts = totalProducts
     self.averagePrice = averagePrice

@@ -12,6 +12,7 @@ let package = Package(
     products: [
         .singleTargetLibrary("CroatianGroceryCore"),
         .singleTargetLibrary("CroatianGroceryUI"),
+        .singleTargetLibrary("SharedGroceryProduct"),
         .executable(name: "grocery-price-cli", targets: ["GroceryPriceCLI"]),
     ],
     dependencies: [
@@ -20,6 +21,15 @@ let package = Package(
         .package(url: "https://github.com/realm/SwiftLint", exact: "0.54.0"),
     ],
     targets: {
+        
+        let sharedProductTarget = Target.target(
+            name: "SharedGroceryProduct",
+            dependencies: [
+                "SwiftyJSON"
+            ],
+            path: "Sources/SharedGroceryProduct"
+        )
+        
         let coreTarget = Target.target(
             name: "CroatianGroceryCore",
             dependencies: [
@@ -54,6 +64,7 @@ let package = Package(
         )
         
         var targets: [Target] = [
+            sharedProductTarget,
             coreTarget,
             uiTarget,
             cliTarget,

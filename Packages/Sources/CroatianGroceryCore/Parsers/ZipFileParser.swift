@@ -59,7 +59,7 @@ public class TemporaryFileManager {
 
 extension DataDownloader {
     
-    func parseZipFile(_ data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    func parseZipFile(_ data: Data, provider: ShopProvider) async throws -> [UnifiedProduct] {
         let zipParser = ZipFileParser()
         let csvFiles = try zipParser.extractCSVFiles(from: data)
         
@@ -79,7 +79,7 @@ extension DataDownloader {
         return allProducts
     }
     
-    func parseXMLZipFile(_ data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    func parseXMLZipFile(_ data: Data, provider: ShopProvider) async throws -> [UnifiedProduct] {
         let zipParser = ZipFileParser()
         let xmlFiles = try zipParser.extractXMLFiles(from: data)
         
@@ -101,7 +101,7 @@ extension DataDownloader {
         return allProducts
     }
     
-    private func parseXMLData(_ data: Data, provider: GroceryProvider) async throws -> [UnifiedProduct] {
+    private func parseXMLData(_ data: Data, provider: ShopProvider) async throws -> [UnifiedProduct] {
         // TODO: Implement XML parsing for providers that use XML format
         // This would parse store-specific XML schemas and convert to UnifiedProduct
         return []
