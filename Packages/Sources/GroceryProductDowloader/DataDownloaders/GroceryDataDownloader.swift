@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 public actor GroceryDataDownloader {
     

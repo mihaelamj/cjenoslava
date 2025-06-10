@@ -1,76 +1,3 @@
-// start of prompt
-Analyze python code for parsing particular store:
-
-here’s the explanation:
-
-#  How To
-
-The ZIP archive contains CSV files with pricing data for that day.
-
-Archive Structure
-
-The folder structure inside the ZIP archive, for each retail chain:
-
-<chain>/
-<chain>/stores.csv
-<chain>/products.csv
-<chain>/prices.csv
-
-Explanation:
-    •    stores.csv - list of store locations for the retail chain
-    •    products.csv - list of unique products sold by the retail chain
-    •    prices.csv - list of product prices per store (references product and store IDs)
-
-The archive contains data for the following retail chains: Konzum, Spar, Studenac, Plodine, Lidl, Tommy, Kaufland, Eurospin, dm, KTC, Metro, Trgocentar, Žabac, Vrutak, Ribola, NTL.
-
-CSV File Formats
-
-All files are in UTF-8 format, without BOM, and use a comma (,) as the separator.
-The first line of each file contains the column headers.
-
-Stores: stores.csv
-
-Columns:
-    •    store_id - store identifier (within a specific retail chain)
-    •    type - store type (e.g., supermarket, hypermarket)
-    •    address - store address
-    •    city - city where the store is located
-    •    zipcode - store postal code
-
-Products: products.csv
-
-Columns:
-    •    product_id - product identifier (within a specific retail chain)
-    •    barcode - product EAN code if available, or a code in the format <chain>:<product_id>
-    •    name - product name
-    •    brand - product brand
-    •    category - product category
-    •    unit - unit of measure
-    •    quantity - quantity (number of items, weight, or volume)
-
-Note: EAN codes are not always available, so in those cases, a code in the format <chain>:<product_id> is used. The product_id is unique within a retail chain but not across different chains.
-
-Prices: prices.csv
-
-Columns:
-    •    store_id - store identifier (within a specific retail chain)
-    •    product_id - product identifier (within a specific retail chain)
-    •    price - product price
-    •    unit_price - price per unit of measure (if available, otherwise empty)
-    •    best_price_30 - best price in the last 30 days (if available, otherwise empty)
-    •    anchor_price - price as of May 2, 2025 (if available, otherwise empty)
-    •    special_price - discounted price (if available, otherwise empty)
-
-Data Source and Processing
-
-The data was collected via web scraping from retail chain websites,
-based on the Decision on the publication of price lists and display of additional pricing as a direct price control measure in retail, Official Gazette 75/2025, dated May 2, 2025.
-
-Then look at the swift implementation,
-Fix it and change the UnifiedProduct, so that we have StoreDownloader
-
-// end of prompt
-
 # Cijene API
 
 Servis za preuzimanje javnih podataka o cijenama proizvoda u trgovačkim lancima u Republici Hrvatskoj.
@@ -103,12 +30,11 @@ Trenutno podržani trgovački lanci:
 Softver je izgrađen na Pythonu a sastoji se od dva dijela:
 
 * Crawler - preuzima podatke s web stranica trgovačkih lanaca (`crawler`)
-* Web servis - API koji omogućava pristup podacima o cijenama proizvoda (`service`) - **U IZRADI**
+* Web servis - API koji omogućava pristup podacima o cijenama proizvoda (`service`)
 
 ## Instalacija
 
-Za instalaciju crawlera potrebno je imati instaliran Python 3.13 ili noviji. Preporučamo
-korištenje `uv` za setup projekta:
+Za instalaciju crawlera potrebno je imati instaliran Python 3.13 ili noviji. Preporučamo korištenje `uv` za setup projekta:
 
 ```bash
 git clone https://github.com/senko/cijene-api.git
@@ -142,6 +68,8 @@ odabir datuma (default: trenutni dan), `-c` za odabir lanaca (default: svi) te
 
 ### Web servis
 
+Web servis koristi PostgreSQL bazu podataka za pohranu podataka o cijenama.
+
 Prije pokretanja servisa, kreirajte datoteku `.env` sa konfiguracijskim varijablama.
 Primjer datoteke sa zadanim (default) vrijednostima može se naći u `.env.example`.
 
@@ -154,6 +82,39 @@ uv run -m service.main
 Servis će biti dostupan na `http://localhost:8000` (ako niste mijenjali port), a na
 `http://localhost:8000/docs` je dostupna Swagger dokumentacija API-ja.
 
+#### Uvoz podataka
+
+Servis drži podatke u PostgreSQL bazi podataka. Za uvoz podataka iz CSV
+datoteka koje kreira crawler, možete koristiti sljedeću komandu:
+
+```bash
+uv run -m service.db.import /path/to/csv-folder/
+```
+
+CSV folder treba biti imenovan u `YYYY-MM-DD` formatu, gdje `YYYY-MM-DD`
+predstavlja datum za koji se podaci uvoze, i sadržavati CSV datoteke u
+istom formatu kakve generira crawler (*ne* CSV datoteke skinute sa stranica
+nekog trgovačkog lanca!).
+
+## Dodatni podaci o proizvodima
+
+Dodatni pročišćeni podaci o proizvodima (naziv, marka, količina, jedinica mjere)
+za najčeših ~30 tisuća proizvoda dostupni su u `enrichment/products.csv` datoteci
+a mogu se uvesti u bazu koristeći sljedeću komandu:
+
+```bash
+uv run -m service.db.enrich enrichment/products.csv
+```
+
+#### Kreiranje korisnika
+
+Neki API endpointovi zahtijevaju autentifikaciju. Korisnike možete kreirati
+direktno u bazi podataka koristeći SQL, npr:
+
+```sql
+INSERT INTO users (name, api_key, is_active) VALUES ('Senko', 'secret-key', TRUE);
+```
+
 ## Licenca
 
 Ovaj projekt je licenciran pod [AGPL-3 licencom](LICENSE).
@@ -161,3 +122,7 @@ Ovaj projekt je licenciran pod [AGPL-3 licencom](LICENSE).
 Podaci prikupljeni putem ovog projekta su javni i dostupni svima, temeljem
 Odluke o objavi cjenika i isticanju dodatne cijene kao mjeri izravne
 kontrole cijena u trgovini na malo, NN 75/2025 od 2.5.2025.
+
+Pročišćeni CSV podaci o proizvodima
+([`enrichment/products.csv`](enrichment/products.csv))
+dostupni su pod [CC BY-NC-SA licencom](https://creativecommons.org/licenses/by-nc-sa/4.0/).

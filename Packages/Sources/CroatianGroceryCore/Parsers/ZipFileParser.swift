@@ -11,7 +11,7 @@ public class ZipFileParser {
         // This is a simplified ZIP parser for CSV extraction
         // In a production app, you might want to use a proper ZIP library
         
-        var csvFiles: [String: Data] = [:]
+        let csvFiles: [String: Data] = [:]
         
         // For now, return empty dictionary - need to implement proper ZIP parsing
         // This would typically involve:
@@ -25,7 +25,7 @@ public class ZipFileParser {
     
     public func extractXMLFiles(from zipData: Data) throws -> [String: Data] {
         // Similar to CSV extraction but for XML files (used by some stores)
-        var xmlFiles: [String: Data] = [:]
+        let xmlFiles: [String: Data] = [:]
         
         // TODO: Implement proper ZIP parsing for XML files
         

@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 /// Special downloader for DM (Excel files from JSON index)
 public actor SpecialDMDownloader: SpecialFormatDownloader {

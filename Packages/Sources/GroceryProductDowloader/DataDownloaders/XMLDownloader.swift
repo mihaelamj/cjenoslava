@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 /// For stores like Ribola, Trgocentar, Vrutak that use XML format
 public actor XMLDownloader: SpecialFormatDownloader {

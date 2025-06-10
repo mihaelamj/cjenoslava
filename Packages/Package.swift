@@ -32,6 +32,7 @@ let package = Package(
         let groceryProductDownloaderTarget = Target.target(
             name: "GroceryProductDowloader",
             dependencies: [
+                "GroceryProduct",
                 "SwiftyJSON",
                 "ZIPFoundation"
             ]
@@ -77,7 +78,7 @@ let package = Package(
 //            path: "Tests"
 //        )
         
-        var targets: [Target] = [
+        let targets: [Target] = [
             groceryProductTarget,
             groceryProductDownloaderTarget,
             groceryProductDownloaderTestTarget,
@@ -92,7 +93,7 @@ let package = Package(
 
 // Inject SwiftLint plugin into each target
 package.targets = package.targets.map { target in
-    var plugins = target.plugins ?? []
+    let plugins = target.plugins ?? []
 //    plugins.append(.plugin(name: "SwiftLintPlugin", package: "SwiftLint"))
     target.plugins = plugins
     return target

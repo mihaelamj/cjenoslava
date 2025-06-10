@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 /// For stores like Lidl, Plodine that package data in ZIP files
 public actor ZipArchiveDownloader: ArchiveBasedDownloader {

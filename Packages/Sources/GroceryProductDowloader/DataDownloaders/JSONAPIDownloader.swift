@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 /// For stores like Tommy, Spar that use JSON APIs
 public actor JSONAPIDownloader: APIBasedDownloader {

@@ -1,5 +1,5 @@
 import Foundation
-import ArgumentParser
+@preconcurrency import ArgumentParser
 import CroatianGroceryCore
 
 //@main

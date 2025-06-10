@@ -1,4 +1,5 @@
 import Foundation
+import GroceryProduct
 
 /// For stores like Konzum, Kaufland that list CSV files on index pages
 public actor IndexCSVDownloader: IndexBasedDownloader {
