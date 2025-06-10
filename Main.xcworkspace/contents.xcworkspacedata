@@ -20,9 +20,6 @@
          location = "group:crawler"
          name = "crawler">
          <FileRef
-            location = "group:test.py">
-         </FileRef>
-         <FileRef
             location = "group:crawl.py">
          </FileRef>
          <FileRef
@@ -105,9 +102,6 @@
                location = "group:zabac.py">
             </FileRef>
          </Group>
-         <FileRef
-            location = "group:combined_crawlers.py">
-         </FileRef>
       </Group>
       <FileRef
          location = "group:pyproject.toml">
@@ -141,8 +135,5 @@
             location = "group:main.py">
          </FileRef>
       </Group>
-      <FileRef
-         location = "group:HowTo.md">
-      </FileRef>
    </Group>
 </Workspace>

@@ -7,22 +7,22 @@ from pathlib import Path
 from time import time
 
 
+from crawler.store.dm import DmCrawler
+from crawler.store.eurospin import EurospinCrawler
+from crawler.store.kaufland import KauflandCrawler
 from crawler.store.konzum import KonzumCrawler
+from crawler.store.ktc import KtcCrawler
 from crawler.store.lidl import LidlCrawler
+from crawler.store.metro import MetroCrawler
+from crawler.store.ntl import NtlCrawler
 from crawler.store.plodine import PlodineCrawler
 from crawler.store.ribola import RibolaCrawler
 from crawler.store.spar import SparCrawler
 from crawler.store.studenac import StudenacCrawler
 from crawler.store.tommy import TommyCrawler
-from crawler.store.kaufland import KauflandCrawler
-from crawler.store.eurospin import EurospinCrawler
-from crawler.store.dm import DmCrawler
-from crawler.store.ktc import KtcCrawler
-from crawler.store.metro import MetroCrawler
 from crawler.store.trgocentar import TrgocentarCrawler
-from crawler.store.zabac import ZabacCrawler
 from crawler.store.vrutak import VrutakCrawler
-from crawler.store.ntl import NtlCrawler
+from crawler.store.zabac import ZabacCrawler
 
 
 from crawler.store.output import save_chain, copy_archive_info, create_archive
@@ -30,22 +30,22 @@ from crawler.store.output import save_chain, copy_archive_info, create_archive
 logger = logging.getLogger(__name__)
 
 CRAWLERS = {
-    StudenacCrawler.CHAIN: StudenacCrawler,
-    SparCrawler.CHAIN: SparCrawler,
-    KonzumCrawler.CHAIN: KonzumCrawler,
-    PlodineCrawler.CHAIN: PlodineCrawler,
-    LidlCrawler.CHAIN: LidlCrawler,
-    TommyCrawler.CHAIN: TommyCrawler,
-    KauflandCrawler.CHAIN: KauflandCrawler,
-    EurospinCrawler.CHAIN: EurospinCrawler,
     DmCrawler.CHAIN: DmCrawler,
+    EurospinCrawler.CHAIN: EurospinCrawler,
+    KauflandCrawler.CHAIN: KauflandCrawler,
+    KonzumCrawler.CHAIN: KonzumCrawler,
     KtcCrawler.CHAIN: KtcCrawler,
+    LidlCrawler.CHAIN: LidlCrawler,
     MetroCrawler.CHAIN: MetroCrawler,
-    TrgocentarCrawler.CHAIN: TrgocentarCrawler,
-    ZabacCrawler.CHAIN: ZabacCrawler,
-    VrutakCrawler.CHAIN: VrutakCrawler,
     NtlCrawler.CHAIN: NtlCrawler,
+    PlodineCrawler.CHAIN: PlodineCrawler,
     RibolaCrawler.CHAIN: RibolaCrawler,
+    SparCrawler.CHAIN: SparCrawler,
+    StudenacCrawler.CHAIN: StudenacCrawler,
+    TommyCrawler.CHAIN: TommyCrawler,
+    TrgocentarCrawler.CHAIN: TrgocentarCrawler,
+    VrutakCrawler.CHAIN: VrutakCrawler,
+    ZabacCrawler.CHAIN: ZabacCrawler,
 }
 
 
