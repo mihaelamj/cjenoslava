@@ -71,3 +71,4 @@ DerivedData
 /*.xcodeproj
 /_sources
 DerivedData/
+.vscode
